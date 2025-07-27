@@ -1,0 +1,248 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\fhlcat\\source\\WebCat\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{C77993EC-9AB4-4AAA-8146-553399411270}|WebCatCli\\WebCatCli.csproj|c:\\users\\fhlcat\\source\\webcat\\webcatcli\\webcatcli.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{C77993EC-9AB4-4AAA-8146-553399411270}|WebCatCli\\WebCatCli.csproj|solutionrelative:webcatcli\\webcatcli.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9570B31C-A8B0-4637-956B-923BB5143BC3}|WebCat\\WebCat.csproj|c:\\users\\fhlcat\\source\\webcat\\webcat\\webcat.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{9570B31C-A8B0-4637-956B-923BB5143BC3}|WebCat\\WebCat.csproj|solutionrelative:webcat\\webcat.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C77993EC-9AB4-4AAA-8146-553399411270}|WebCatCli\\WebCatCli.csproj|c:\\users\\fhlcat\\source\\webcat\\webcatcli\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C77993EC-9AB4-4AAA-8146-553399411270}|WebCatCli\\WebCatCli.csproj|solutionrelative:webcatcli\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9570B31C-A8B0-4637-956B-923BB5143BC3}|WebCat\\WebCat.csproj|c:\\users\\fhlcat\\source\\webcat\\webcat\\work.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9570B31C-A8B0-4637-956B-923BB5143BC3}|WebCat\\WebCat.csproj|solutionrelative:webcat\\work.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9570B31C-A8B0-4637-956B-923BB5143BC3}|WebCat\\WebCat.csproj|c:\\users\\fhlcat\\source\\webcat\\webcat\\web\\searchresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9570B31C-A8B0-4637-956B-923BB5143BC3}|WebCat\\WebCat.csproj|solutionrelative:webcat\\web\\searchresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9570B31C-A8B0-4637-956B-923BB5143BC3}|WebCat\\WebCat.csproj|c:\\users\\fhlcat\\source\\webcat\\webcat\\web\\webpage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9570B31C-A8B0-4637-956B-923BB5143BC3}|WebCat\\WebCat.csproj|solutionrelative:webcat\\web\\webpage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9570B31C-A8B0-4637-956B-923BB5143BC3}|WebCat\\WebCat.csproj|c:\\users\\fhlcat\\source\\webcat\\webcat\\fetchresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9570B31C-A8B0-4637-956B-923BB5143BC3}|WebCat\\WebCat.csproj|solutionrelative:webcat\\fetchresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9570B31C-A8B0-4637-956B-923BB5143BC3}|WebCat\\WebCat.csproj|c:\\users\\fhlcat\\source\\webcat\\webcat\\workoptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9570B31C-A8B0-4637-956B-923BB5143BC3}|WebCat\\WebCat.csproj|solutionrelative:webcat\\workoptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9570B31C-A8B0-4637-956B-923BB5143BC3}|WebCat\\WebCat.csproj|c:\\users\\fhlcat\\source\\webcat\\webcat\\asyncenumerableextension.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9570B31C-A8B0-4637-956B-923BB5143BC3}|WebCat\\WebCat.csproj|solutionrelative:webcat\\asyncenumerableextension.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9570B31C-A8B0-4637-956B-923BB5143BC3}|WebCat\\WebCat.csproj|c:\\users\\fhlcat\\source\\webcat\\webcat\\web\\browser\\utils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9570B31C-A8B0-4637-956B-923BB5143BC3}|WebCat\\WebCat.csproj|solutionrelative:webcat\\web\\browser\\utils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9570B31C-A8B0-4637-956B-923BB5143BC3}|WebCat\\WebCat.csproj|c:\\users\\fhlcat\\source\\webcat\\webcat\\web\\browser\\bing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9570B31C-A8B0-4637-956B-923BB5143BC3}|WebCat\\WebCat.csproj|solutionrelative:webcat\\web\\browser\\bing.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9570B31C-A8B0-4637-956B-923BB5143BC3}|WebCat\\WebCat.csproj|c:\\users\\fhlcat\\source\\webcat\\webcat\\ai\\utils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9570B31C-A8B0-4637-956B-923BB5143BC3}|WebCat\\WebCat.csproj|solutionrelative:webcat\\ai\\utils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{9570B31C-A8B0-4637-956B-923BB5143BC3}|WebCat\\WebCat.csproj|c:\\users\\fhlcat\\source\\webcat\\webcat\\ai\\airequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9570B31C-A8B0-4637-956B-923BB5143BC3}|WebCat\\WebCat.csproj|solutionrelative:webcat\\ai\\airequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{C77993EC-9AB4-4AAA-8146-553399411270}|WebCatCli\\WebCatCli.csproj|c:\\users\\fhlcat\\source\\webcat\\webcatcli\\webcatcli.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{C77993EC-9AB4-4AAA-8146-553399411270}|WebCatCli\\WebCatCli.csproj|solutionrelative:webcatcli\\webcatcli.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "WebCatCli",
+              "DocumentMoniker": "C:\\Users\\fhlcat\\source\\WebCat\\WebCatCli\\WebCatCli.csproj",
+              "RelativeDocumentMoniker": "WebCatCli\\WebCatCli.csproj",
+              "ToolTip": "C:\\Users\\fhlcat\\source\\WebCat\\WebCatCli\\WebCatCli.csproj",
+              "RelativeToolTip": "WebCatCli\\WebCatCli.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-07-28T15:06:26.47Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "FetchResult.cs",
+              "DocumentMoniker": "C:\\Users\\fhlcat\\source\\WebCat\\WebCat\\FetchResult.cs",
+              "RelativeDocumentMoniker": "WebCat\\FetchResult.cs",
+              "ToolTip": "C:\\Users\\fhlcat\\source\\WebCat\\WebCat\\FetchResult.cs",
+              "RelativeToolTip": "WebCat\\FetchResult.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-28T14:58:57.782Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Webpage.cs",
+              "DocumentMoniker": "C:\\Users\\fhlcat\\source\\WebCat\\WebCat\\Web\\Webpage.cs",
+              "RelativeDocumentMoniker": "WebCat\\Web\\Webpage.cs",
+              "ToolTip": "C:\\Users\\fhlcat\\source\\WebCat\\WebCat\\Web\\Webpage.cs",
+              "RelativeToolTip": "WebCat\\Web\\Webpage.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-28T14:58:56.973Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "SearchResult.cs",
+              "DocumentMoniker": "C:\\Users\\fhlcat\\source\\WebCat\\WebCat\\Web\\SearchResult.cs",
+              "RelativeDocumentMoniker": "WebCat\\Web\\SearchResult.cs",
+              "ToolTip": "C:\\Users\\fhlcat\\source\\WebCat\\WebCat\\Web\\SearchResult.cs",
+              "RelativeToolTip": "WebCat\\Web\\SearchResult.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-28T14:58:49.868Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Bing.cs",
+              "DocumentMoniker": "C:\\Users\\fhlcat\\source\\WebCat\\WebCat\\Web\\Browser\\Bing.cs",
+              "RelativeDocumentMoniker": "WebCat\\Web\\Browser\\Bing.cs",
+              "ToolTip": "C:\\Users\\fhlcat\\source\\WebCat\\WebCat\\Web\\Browser\\Bing.cs",
+              "RelativeToolTip": "WebCat\\Web\\Browser\\Bing.cs",
+              "ViewState": "AgIAACsAAAAAAAAAAAAuwCUAAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-28T14:47:23.094Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "Utils.cs",
+              "DocumentMoniker": "C:\\Users\\fhlcat\\source\\WebCat\\WebCat\\Ai\\Utils.cs",
+              "RelativeDocumentMoniker": "WebCat\\Ai\\Utils.cs",
+              "ToolTip": "C:\\Users\\fhlcat\\source\\WebCat\\WebCat\\Ai\\Utils.cs",
+              "RelativeToolTip": "WebCat\\Ai\\Utils.cs",
+              "ViewState": "AgIAAFUAAAAAAAAAAAAuwAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-28T14:57:53.029Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\fhlcat\\source\\WebCat\\WebCatCli\\Program.cs",
+              "RelativeDocumentMoniker": "WebCatCli\\Program.cs",
+              "ToolTip": "C:\\Users\\fhlcat\\source\\WebCat\\WebCatCli\\Program.cs",
+              "RelativeToolTip": "WebCatCli\\Program.cs",
+              "ViewState": "AgIAAFEAAAAAAAAAAAAAAFgAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-28T14:47:03.488Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "AsyncEnumerableExtension.cs",
+              "DocumentMoniker": "C:\\Users\\fhlcat\\source\\WebCat\\WebCat\\AsyncEnumerableExtension.cs",
+              "RelativeDocumentMoniker": "WebCat\\AsyncEnumerableExtension.cs",
+              "ToolTip": "C:\\Users\\fhlcat\\source\\WebCat\\WebCat\\AsyncEnumerableExtension.cs",
+              "RelativeToolTip": "WebCat\\AsyncEnumerableExtension.cs",
+              "ViewState": "AgIAADQAAAAAAAAAAAAuwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-28T14:58:58.438Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Work.cs",
+              "DocumentMoniker": "C:\\Users\\fhlcat\\source\\WebCat\\WebCat\\Work.cs",
+              "RelativeDocumentMoniker": "WebCat\\Work.cs",
+              "ToolTip": "C:\\Users\\fhlcat\\source\\WebCat\\WebCat\\Work.cs",
+              "RelativeToolTip": "WebCat\\Work.cs",
+              "ViewState": "AgIAAC4AAAAAAAAAAAAAwDYAAAAtAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-28T14:59:03.699Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "WebCat.csproj",
+              "DocumentMoniker": "C:\\Users\\fhlcat\\source\\WebCat\\WebCat\\WebCat.csproj",
+              "RelativeDocumentMoniker": "WebCat\\WebCat.csproj",
+              "ToolTip": "C:\\Users\\fhlcat\\source\\WebCat\\WebCat\\WebCat.csproj",
+              "RelativeToolTip": "WebCat\\WebCat.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-07-28T14:47:19Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "WorkOptions.cs",
+              "DocumentMoniker": "C:\\Users\\fhlcat\\source\\WebCat\\WebCat\\WorkOptions.cs",
+              "RelativeDocumentMoniker": "WebCat\\WorkOptions.cs",
+              "ToolTip": "C:\\Users\\fhlcat\\source\\WebCat\\WebCat\\WorkOptions.cs",
+              "RelativeToolTip": "WebCat\\WorkOptions.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAYwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-28T14:59:17.778Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "AiRequest.cs",
+              "DocumentMoniker": "C:\\Users\\fhlcat\\source\\WebCat\\WebCat\\Ai\\AiRequest.cs",
+              "RelativeDocumentMoniker": "WebCat\\Ai\\AiRequest.cs",
+              "ToolTip": "C:\\Users\\fhlcat\\source\\WebCat\\WebCat\\Ai\\AiRequest.cs",
+              "RelativeToolTip": "WebCat\\Ai\\AiRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-28T14:57:51.501Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Utils.cs",
+              "DocumentMoniker": "C:\\Users\\fhlcat\\source\\WebCat\\WebCat\\Web\\Browser\\Utils.cs",
+              "RelativeDocumentMoniker": "WebCat\\Web\\Browser\\Utils.cs",
+              "ToolTip": "C:\\Users\\fhlcat\\source\\WebCat\\WebCat\\Web\\Browser\\Utils.cs",
+              "RelativeToolTip": "WebCat\\Web\\Browser\\Utils.cs",
+              "ViewState": "AgIAAF8AAAAAAAAAAAAzwBsAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-28T14:47:23.279Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "WebCatCli.csproj",
+              "DocumentMoniker": "C:\\Users\\fhlcat\\source\\WebCat\\WebCatCli\\WebCatCli.csproj",
+              "RelativeDocumentMoniker": "WebCatCli\\WebCatCli.csproj",
+              "ToolTip": "C:\\Users\\fhlcat\\source\\WebCat\\WebCatCli\\WebCatCli.csproj",
+              "RelativeToolTip": "WebCatCli\\WebCatCli.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-07-28T14:47:01.321Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,36 +1,13 @@
-﻿using System.Threading.Channels;
-using WebCat.Browser;
+﻿using WebCat.Ai;
+using WebCat.Web;
+using static WebCat.Web.Browser.Bing;
+using static WebCat.Web.Browser.Utils;
 
 namespace WebCat;
 
-public readonly record struct Progress<T>(T Current, int Completed, int Total)
-{
-    public readonly T Current = Current;
-    public readonly int Completed = Completed;
-    public readonly int Total = Total;
-
-    public float Percentage => Total == 0 ? 0 : (float)Completed / Total * 100;
-
-    public override string ToString() => $"{Completed}/{Total} completed";
-}
-
 public static class Work
 {
-    public readonly record struct FetchingResult(SearchResult SearchResult, Webpage Webpage)
-    {
-        public readonly SearchResult SearchResult = SearchResult;
-        public readonly Webpage Webpage = Webpage;
-    };
-
-    public readonly record struct WorkOptions(int Interval, string Endpoint, string ApiKey, string Model)
-    {
-        public readonly int Interval = Interval;
-        public readonly string Endpoint = Endpoint;
-        public readonly string ApiKey = ApiKey;
-        public readonly string Model = Model;
-    }
-
-    public readonly record struct WorkingEvents(
+    public readonly record struct WorkEvents(
         Action<Progress<SearchResult>> Fetching,
         Action<Progress<Webpage>> Processing
     )
@@ -39,62 +16,45 @@ public static class Work
         public readonly Action<Progress<Webpage>> Processing = Processing;
     }
 
-    public readonly record struct WorkResult(FetchingResult FetchingResult, string[] Result)
+    public readonly record struct WorkResult(FetchResult FetchResult, IEnumerable<string> ProcessResult)
     {
-        public readonly FetchingResult FetchingResult = FetchingResult;
-        public readonly string[] Result = Result;
+        public readonly FetchResult FetchResult = FetchResult;
+        public readonly IEnumerable<string> ProcessResult = ProcessResult;
     }
 
-    private static async Task<IEnumerable<TO>> MapAsync<T, TO>(this IAsyncEnumerable<T> source,
-        Func<T, Task<TO>> mapFunc)
+    public static async Task<WorkResult[]> WorkAsync(
+        string query,
+        WorkEvents events,
+        WorkOptions options
+    )
     {
-        var results = new List<TO>();
-        await foreach (var item in source)
+        using var driver = Init(options.BrowserType, options.Headless);
+        var searchResults = await FetchSearchResultsAsync(driver, query);
+        var totalCount = searchResults.Length;
+        var processByAiAsync = Ai.Utils.Request(new Ai.Utils.Options(options.Model, options.Endpoint, options.ApiKey));
+
+        var processResult = await searchResults
+            .MapiAsync(Fetch)
+            .Preload()
+            .MapiAsync(Process)
+            .ToEnumerableAsync();
+
+        return [.. processResult];
+
+        async Task<FetchResult> Fetch(SearchResult result, int i)
         {
-            results.Add(await mapFunc(item));
+            events.Fetching(new Progress<SearchResult>(result, i + 1, totalCount));
+            // ReSharper disable once AccessToDisposedClosure
+            var webpage = await FetchWebpageAsync(driver, result.Url);
+            await Task.Delay(options.Interval);
+            return new FetchResult(result, webpage);
         }
 
-        return results;
-    }
-
-    public static async Task<IEnumerable<WorkResult>> WorkAsync(string query, WorkingEvents events, WorkOptions options)
-    {
-        var driver = Utils.Init();
-        var searchResults = await Bing.FetchSearchResultsAsync(driver, query);
-
-        var channel = Channel.CreateUnbounded<FetchingResult>();
-
-        var totalCount = searchResults.Length;
-        _ = Task.Run(async () =>
+        async Task<WorkResult> Process(FetchResult fetchingResult, int i)
         {
-            var completedCount = 0;
-
-            foreach (var searchResult in searchResults)
-            {
-                events.Fetching(new Progress<SearchResult>(searchResult, completedCount, totalCount));
-                var webpage = await Utils.FetchWebpageAsync(driver, searchResult.Url);
-                await channel.Writer.WriteAsync(new FetchingResult(searchResult, webpage));
-                completedCount++;
-                await Task.Delay(options.Interval);
-            }
-        });
-
-        var processByAiAsync = Ai.Request(new Ai.Options(options.Model, options.Endpoint, options.ApiKey));
-        var processingCompletedCount = 0;
-        return await channel.Reader
-            .ReadAllAsync()
-            .MapAsync(async fetchingResult =>
-            {
-                events.Processing(new Progress<Webpage>(
-                    fetchingResult.Webpage,
-                    processingCompletedCount,
-                    searchResults.Length
-                ));
-                processingCompletedCount++;
-                var aiResult = await processByAiAsync(
-                    new AiRequest(fetchingResult.Webpage.Content, query)
-                );
-                return new WorkResult(fetchingResult, aiResult);
-            });
+            events.Processing(new Progress<Webpage>(fetchingResult.Webpage, i + 1, searchResults.Length));
+            var aiResult = await processByAiAsync(new AiRequest(fetchingResult.Webpage.Content, query));
+            return new WorkResult(fetchingResult, aiResult);
+        }
     }
 }

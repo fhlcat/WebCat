@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "WebCatCli": {
+      "commandName": "Project",
+      "commandLineArgs": "中性笔型号推荐 -a sk-4ef343d3dfbe481d8b30db02abac1d29 -m \"deepseek-chat\""
+    }
+  }
+}
