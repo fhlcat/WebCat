@@ -55,6 +55,9 @@ public static class Utils
 
         options.AddArguments(arguments);
         options.AddExcludedArguments(ArgumentsToExclude);
+        options.PageLoadStrategy = PageLoadStrategy.Eager;
+        options.PageLoadTimeout = new TimeSpan(0, 0, 30);
+        options.ImplicitWaitTimeout = new TimeSpan(0, 0, 10);
 
         return new EdgeDriver(service, options);
     }
@@ -71,6 +74,9 @@ public static class Utils
 
         options.AddArguments(arguments);
         options.AddExcludedArguments(ArgumentsToExclude);
+        options.PageLoadStrategy = PageLoadStrategy.Eager;
+        options.PageLoadTimeout = new TimeSpan(0, 0, 30);
+        options.ImplicitWaitTimeout = new TimeSpan(0, 0, 10);
 
         return new ChromeDriver(service, options);
     }
