@@ -1,50 +1,50 @@
 ﻿using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using Serilog;
 using Serilog.Core;
 using WebCat;
-using WebCat.Fetch.Struct;
-using WebCat.Struct;
-using static WebCat.Process.Utils;
+using static WebCat.Main;
+using static WebCat.Process;
 
 namespace WebCatCli;
-
-[JsonSourceGenerationOptions(PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase, IncludeFields = true)]
-[JsonSerializable(typeof(string[][]))]
-[JsonSerializable(typeof(Work.WorkOptions))]
-[JsonSerializable(typeof(ProcessOptions))]
-internal partial class LoggingJsonSourceGenerationContext : JsonSerializerContext;
 
 public static class Logging
 {
     public static readonly Logger Logger = new LoggerConfiguration()
         .WriteTo.Console()
         .WriteTo.File("log.txt")
-        .Destructure.ByTransforming<Work.WorkOptions>(options =>
-            JsonSerializer.Serialize(options, LoggingJsonSourceGenerationContext.Default.WorkOptions)
+        .Destructure.ByTransforming<MainOptions>(options =>
+            JsonSerializer.Serialize(options, LoggingJsonSourceGenerationContext.Default.MainOptions)
         )
         .Destructure.ByTransforming<ProcessOptions>(options =>
             JsonSerializer.Serialize(options, LoggingJsonSourceGenerationContext.Default.ProcessOptions)
         )
-        .Destructure.ByTransforming<WebCat.Struct.Progress<SearchEngineResult>>(progress => new
+        .Destructure.ByTransforming<Main.Progress<Bing.SearchEngineResult>>(progress => new
         {
-            progress.Current.Title,
-            progress.CurrentCount,
+            progress.CurrentWorking.Title,
+            Current = progress.Current + 1,
             progress.Total
-        }).Destructure.ByTransforming<WebCat.Struct.Progress<FetchResult>>(progress => new
+        })
+        .Destructure.ByTransforming<Main.Progress<BrowserUtils.Webpage>>(progress => new
         {
-            progress.Current.Webpage.Title,
-            progress.CurrentCount,
+            progress.CurrentWorking.Title,
+            Current = progress.Current + 1,
             progress.Total
-        }).Destructure.ByTransforming<Work.WorkRecord>(record =>
+        })
+        .Destructure.ByTransforming<MainResult>(result => new
         {
-            var results = record.Results.Select(result => result.ProcessResult.ToArray()).ToArray();
-            var resultsJson = JsonSerializer.Serialize(results, LoggingJsonSourceGenerationContext.Default.StringArrayArray);
-            return new
-            {
-                record.Query,
-                Results = Regex.Unescape(resultsJson),
-            };
-        }).CreateLogger();
+            result.Query,
+            Results = SerializeResult(result)
+        })
+        .CreateLogger();
+
+    private static string SerializeResult(MainResult result)
+    {
+        var resultsArray = result.Value.Select(pair => pair.Value).ToArray();
+        var json = JsonSerializer.Serialize(
+            resultsArray,
+            LoggingJsonSourceGenerationContext.Default.StringArrayArray
+        );
+        return Regex.Unescape(json);
+    }
 }

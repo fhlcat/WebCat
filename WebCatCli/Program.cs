@@ -2,10 +2,14 @@
 
 using System.CommandLine;
 using System.Text.Json;
+using Microsoft.FSharp.Control;
+using Microsoft.FSharp.Core;
 using Serilog;
 using WebCat;
-using WebCat.Fetch.Browser;
-using static WebCat.Work;
+using static WebCat.BrowserUtils;
+using static WebCat.Main;
+using FetchProgress = WebCat.Main.Progress<WebCat.Bing.SearchEngineResult>;
+using ProcessProgress = WebCat.Main.Progress<WebCat.BrowserUtils.Webpage>;
 
 namespace WebCatCli;
 
@@ -47,16 +51,17 @@ internal static class Program
         Description = "Run the browser in non-headless mode"
     };
 
-    private static readonly Option<Utils.BrowserType> BrowserTypeOption = new("--browser-type", "-b")
+    private static readonly Option<Browser> BrowserTypeOption = new("--browser-type", "-b")
     {
-        DefaultValueFactory = _ => Utils.BrowserType.Chrome,
+        DefaultValueFactory = _ => Browser.Chrome,
         Description = "The type of browser to use"
     };
 
     private static readonly Option<float> TemperatureOption = new("--temperature", "-t")
     {
         DefaultValueFactory = _ => 0,
-        Description = "The temperature for the AI model, controlling randomness in responses, must be between 0.0 and 1.0"
+        Description =
+            "The temperature for the AI model, controlling randomness in responses, must be between 0.0 and 1.0"
     };
 
     private static readonly RootCommand RootCommand =
@@ -71,36 +76,38 @@ internal static class Program
         TemperatureOption
     ];
 
-    private static Task StoreWorkRecordAsync(WorkRecord record)
+    private static Task StoreWorkRecordAsync(MainResult result)
     {
-        var json = JsonSerializer.Serialize(record, JsonSourceGenerationContext.Default.WorkRecord);
-        var fileName = $"./Results/{record.Query}-{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.json";
+        var json = JsonSerializer.Serialize(result, LoggingJsonSourceGenerationContext.Default.MainResult);
+        var fileName = $"./Results/{result.Query}-{DateTime.Now:yyyy-MM-dd_HH-mm-ss}.json";
         Directory.CreateDirectory("./Results");
         return File.WriteAllTextAsync(fileName, json);
     }
 
     private static void MainAction(ParseResult parseResult)
     {
-        var question = parseResult.GetValue(QuestionArgument);
-        var processOptions = new WebCat.Process.Utils.ProcessOptions(
-            parseResult.GetValue(ModelOption)!,
-            parseResult.GetValue(EndpointOption)!,
+        var query = parseResult.GetValue(QuestionArgument);
+        var processOptions = new Process.ProcessOptions(
             parseResult.GetValue(ApiKeyOption)!,
-            parseResult.GetValue(TemperatureOption)
+            parseResult.GetValue(TemperatureOption),
+            parseResult.GetValue(ModelOption)!,
+            parseResult.GetValue(EndpointOption)!
         );
-        var options = new WorkOptions(
+        var options = new MainOptions(
             parseResult.GetValue(IntervalOption),
-            processOptions,
+            parseResult.GetValue(BrowserTypeOption),
             parseResult.GetValue(HeadlessOption),
-            parseResult.GetValue(BrowserTypeOption)
-        );
-        var events = new WorkEvents(
-            progress => Log.Information("Fetching: {@Progress}", progress),
-            progress => Log.Information("Processing: {@Progress}", progress)
+            processOptions,
+            FSharpOption<FSharpFunc<FetchProgress, Unit>>.Some(
+                FuncConvert.FromAction((FetchProgress progress) => Log.Information("Fetching: {@Progress}", progress))
+            ),
+            FSharpOption<FSharpFunc<ProcessProgress, Unit>>.Some(
+                FuncConvert.FromAction((ProcessProgress progress) => Log.Information("Processing: {@Progress}", progress))
+            )
         );
 
         Log.Information("Starting work with options: {@Options}", options);
-        var record = WorkAsync(question!, events, options).Result;
+        var record = FSharpAsync.StartAsTask(runMainAsync(query, options), null, null).Result;
         Log.Information("Completed: {@Record}", record);
         StoreWorkRecordAsync(record).Wait();
     }
