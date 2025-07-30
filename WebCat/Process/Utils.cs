@@ -1,11 +1,10 @@
 ﻿using System.ClientModel;
 using System.Text.Json;
-using System.Text.Json.Nodes;
 using OpenAI;
 using OpenAI.Chat;
-using static LanguageExt.Prelude;
+using WebCat.Process.Struct;
 
-namespace WebCat.Ai;
+namespace WebCat.Process;
 
 public static class Utils
 {
@@ -31,57 +30,48 @@ public static class Utils
         严格遵守输入和输出格式，确保输出是有效的JSON。
         """;
 
-    private static string FormatRequest(AiRequest request)
-    {
-        return new JsonObject
-        {
-            ["article"] = request.Article,
-            ["question"] = request.Question
-        }.ToJsonString();
-    }
+    private static IEnumerable<string> ParseResponse(string responseText) => JsonDocument
+        .Parse(responseText).RootElement
+        .GetProperty("response")
+        .EnumerateArray()
+        .Select(element => element.GetString()!);
 
-    private static async Task<IEnumerable<string>> PerformRequest(ChatClient chatClient, AiRequest request)
+    private static async Task<IEnumerable<string>> PerformRequest(ChatClient chatClient, ProcessRequest request,
+        float temperature)
     {
         var result = await chatClient.CompleteChatAsync(
             (ChatMessage[])
             [
                 new SystemChatMessage(SystemPrompt),
-                new UserChatMessage(FormatRequest(request))
+                new UserChatMessage(JsonSerializer.Serialize(request,
+                    JsonSourceGenerationContext.Default.ProcessRequest))
             ],
             new ChatCompletionOptions
-                { ResponseFormat = ChatResponseFormat.CreateJsonObjectFormat() }
+                { ResponseFormat = ChatResponseFormat.CreateJsonObjectFormat(), Temperature = temperature }
         );
         var responseText = result.Value.Content[0].Text!;
-        return JsonDocument
-            .Parse(responseText).RootElement
-            .GetProperty("response")
-            .EnumerateArray()
-            .Select(element => element.GetString()!);
+        return ParseResponse(responseText);
     }
 
-    public readonly record struct Options(string Model, string Endpoint, string ApiKey)
+    public readonly record struct ProcessOptions(string Model, string Endpoint, string ApiKey, float Temperature)
     {
         public readonly string ApiKey = ApiKey;
         public readonly string Endpoint = Endpoint;
         public readonly string Model = Model;
+        public readonly float Temperature = Temperature;
     }
 
-    private static ChatClient Init(Options options)
+    public static Func<ProcessRequest, Task<IEnumerable<string>>> Request(ProcessOptions processOptions)
     {
-        return new ChatClient(
-            options.Model,
-            new ApiKeyCredential(options.ApiKey),
+        var client = new ChatClient(
+            processOptions.Model,
+            new ApiKeyCredential(processOptions.ApiKey),
             new OpenAIClientOptions
             {
-                Endpoint = new Uri(options.Endpoint)
+                Endpoint = new Uri(processOptions.Endpoint),
             }
         );
-    }
 
-    public static Func<AiRequest, Task<IEnumerable<string>>> Request(Options options)
-    {
-        var client = Init(options);
-        var performRequest = PerformRequest;
-        return curry(performRequest)(client);
+        return options => PerformRequest(client, options, processOptions.Temperature);
     }
 }

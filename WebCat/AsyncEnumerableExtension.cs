@@ -28,26 +28,7 @@ public static class AsyncEnumerableExtension
         }
     }
 
-    public static async Task<IEnumerable<T>> ToEnumerableAsync<T>(this IAsyncEnumerable<T> source)
-    {
-        var result = new List<T>();
-        await foreach (var item in source)
-        {
-            result.Add(item);
-        }
-
-        return result;
-    }
-
-    public static IAsyncEnumerable<T> Preload<T>(this IAsyncEnumerable<T> source)
-    {
-        var channel = Channel.CreateUnbounded<T>();
-        _ = channel.WriteAllEnumerableAsync(source);
-
-        return channel.Reader.ReadAllAsync();
-    }
-
-    public static async Task WriteAllEnumerableAsync<T>(this Channel<T> channel, IAsyncEnumerable<T> items)
+    private static async Task WriteAllEnumerableAsync<T>(this Channel<T> channel, IAsyncEnumerable<T> items)
     {
         await foreach (var item in items)
         {
@@ -55,5 +36,13 @@ public static class AsyncEnumerableExtension
         }
 
         channel.Writer.Complete();
+    }
+
+    public static IAsyncEnumerable<T> LoadAsync<T>(this IAsyncEnumerable<T> source)
+    {
+        var channel = Channel.CreateUnbounded<T>();
+        _ = channel.WriteAllEnumerableAsync(source);
+
+        return channel.Reader.ReadAllAsync();
     }
 }

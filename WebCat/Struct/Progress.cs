@@ -1,4 +1,4 @@
-﻿namespace WebCat;
+﻿namespace WebCat.Struct;
 
 public readonly record struct Progress<T>(T Current, int CurrentCount, int Total)
 {

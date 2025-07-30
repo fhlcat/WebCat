@@ -1,19 +1,34 @@
-﻿using WebCat.Ai;
-using WebCat.Web;
-using static WebCat.Web.Browser.Bing;
-using static WebCat.Web.Browser.Utils;
+﻿using WebCat.Fetch.Struct;
+using WebCat.Process.Struct;
+using WebCat.Struct;
+using static WebCat.Fetch.Browser.Bing;
+using static WebCat.Fetch.Browser.Utils;
+using static WebCat.Process.Utils;
 
 namespace WebCat;
 
 public static class Work
 {
     public readonly record struct WorkEvents(
-        Action<Progress<SearchResult>> Fetching,
-        Action<Progress<Webpage>> Processing
+        Action<Struct.Progress<SearchEngineResult>> Fetching,
+        Action<Struct.Progress<FetchResult>> Processing
     )
     {
-        public readonly Action<Progress<SearchResult>> Fetching = Fetching;
-        public readonly Action<Progress<Webpage>> Processing = Processing;
+        public readonly Action<Struct.Progress<SearchEngineResult>> Fetching = Fetching;
+        public readonly Action<Struct.Progress<FetchResult>> Processing = Processing;
+    }
+
+    public readonly record struct WorkOptions(
+        int Interval,
+        ProcessOptions ProcessOptions,
+        bool Headless,
+        BrowserType BrowserType
+    )
+    {
+        public readonly int Interval = Interval;
+        public readonly ProcessOptions ProcessOptions = ProcessOptions;
+        public readonly bool Headless = Headless;
+        public readonly BrowserType BrowserType = BrowserType;
     }
 
     public readonly record struct WorkResult(FetchResult FetchResult, IEnumerable<string> ProcessResult)
@@ -22,7 +37,13 @@ public static class Work
         public readonly IEnumerable<string> ProcessResult = ProcessResult;
     }
 
-    public static async Task<WorkResult[]> WorkAsync(
+    public record struct WorkRecord(string Query, IEnumerable<WorkResult> Results)
+    {
+        public readonly string Query = Query;
+        public readonly IEnumerable<WorkResult> Results = Results;
+    }
+
+    public static async Task<WorkRecord> WorkAsync(
         string query,
         WorkEvents events,
         WorkOptions options
@@ -31,29 +52,30 @@ public static class Work
         using var driver = Init(options.BrowserType, options.Headless);
         var searchResults = await FetchSearchResultsAsync(driver, query);
         var totalCount = searchResults.Length;
-        var processByAiAsync = Ai.Utils.Request(new Ai.Utils.Options(options.Model, options.Endpoint, options.ApiKey));
+        var processAsync = Request(options.ProcessOptions);
 
-        var processResult = await searchResults
+        var workResults = searchResults
             .MapiAsync(Fetch)
-            .Preload()
-            .MapiAsync(Process)
-            .ToEnumerableAsync();
+            .LoadAsync()
+            .MapiAsync(Process);
 
-        return [.. processResult];
+        var results = await Task.Run(WorkResult[] () => workResults.ToBlockingEnumerable().ToArray());
+        driver.Close();
+        return new WorkRecord(query, results);
 
-        async Task<FetchResult> Fetch(SearchResult result, int i)
+        async Task<FetchResult> Fetch(SearchEngineResult engineResult, int i)
         {
-            events.Fetching(new Progress<SearchResult>(result, i + 1, totalCount));
+            events.Fetching(new Struct.Progress<SearchEngineResult>(engineResult, i + 1, totalCount));
             // ReSharper disable once AccessToDisposedClosure
-            var webpage = await FetchWebpageAsync(driver, result.Url);
+            var webpage = await FetchWebpageAsync(driver, engineResult.Url);
             await Task.Delay(options.Interval);
-            return new FetchResult(result, webpage);
+            return new FetchResult(engineResult, webpage);
         }
 
         async Task<WorkResult> Process(FetchResult fetchingResult, int i)
         {
-            events.Processing(new Progress<Webpage>(fetchingResult.Webpage, i + 1, searchResults.Length));
-            var aiResult = await processByAiAsync(new AiRequest(fetchingResult.Webpage.Content, query));
+            events.Processing(new Struct.Progress<FetchResult>(fetchingResult, i + 1, searchResults.Length));
+            var aiResult = await processAsync(new ProcessRequest(fetchingResult.Webpage.Content, query));
             return new WorkResult(fetchingResult, aiResult);
         }
     }

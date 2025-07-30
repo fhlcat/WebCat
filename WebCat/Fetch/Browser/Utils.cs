@@ -1,8 +1,9 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Edge;
+using WebCat.Fetch.Struct;
 
-namespace WebCat.Web.Browser;
+namespace WebCat.Fetch.Browser;
 
 public static class Utils
 {
@@ -31,7 +32,8 @@ public static class Utils
             "--disable-background-networking",
             "--disable-default-apps",
             // ReSharper disable once StringLiteralTypo
-            "--enable-unsafe-swiftshader"
+            "--enable-unsafe-swiftshader",
+            "--mute-audio"
         };
         if (headless)
         {
@@ -91,14 +93,12 @@ public static class Utils
         };
     }
 
-    public static string? GetInnerText(this IWebElement element) => element.GetAttribute("innerText");
-
-    public static string? GetBodyInnerText(this IWebDriver driver) =>
-        driver.FindElement(By.TagName("body")).GetInnerText();
+    public static string GetBodyInnerText(this IWebDriver driver) =>
+        driver.FindElement(By.TagName("body")).Text;
 
     public static async Task<Webpage> FetchWebpageAsync(IWebDriver driver, string url)
     {
         await driver.Navigate().GoToUrlAsync(url);
-        return new Webpage(driver.Title, driver.GetBodyInnerText()!);
+        return new Webpage(driver.Title, driver.GetBodyInnerText());
     }
 }

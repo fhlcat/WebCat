@@ -1,4 +1,4 @@
-﻿namespace WebCat.Web;
+﻿namespace WebCat.Fetch.Struct;
 
 public readonly record struct Webpage(string Title, string Content)
 {
