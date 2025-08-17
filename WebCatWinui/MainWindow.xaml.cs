@@ -23,6 +23,8 @@ namespace WebCatWinui
     /// </summary>
     public sealed partial class MainWindow : Window
     {
+        private readonly MainViewmodel _viewModel = new();
+        
         public MainWindow()
         {
             InitializeComponent();

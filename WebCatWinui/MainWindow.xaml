@@ -48,7 +48,7 @@
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Query</TextBlock>
-            <TextBox Grid.Row="0" Grid.Column="1" />
+            <TextBox Grid.Row="0" Grid.Column="1" Text="{x:Bind _viewModel.Query, Mode=TwoWay}"/>
             <Grid Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" ColumnSpacing="4" Padding="0,8,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -66,16 +66,16 @@
                         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}" />
             </Grid>
             <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Endpoint</TextBlock>
-            <TextBox Grid.Row="2" Grid.Column="1" />
+            <TextBox Grid.Row="2" Grid.Column="1" Text="{x:Bind _viewModel.Endpoint, Mode=TwoWay}"/>
             <TextBlock Grid.Row="3" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Api Key</TextBlock>
-            <TextBox Grid.Row="3" Grid.Column="1" />
+            <TextBox Grid.Row="3" Grid.Column="1" Text="{x:Bind _viewModel.ApiKey, Mode=TwoWay}"/>
             <TextBlock Grid.Row="4" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Model</TextBlock>
-            <ComboBox Grid.Row="4" Grid.Column="1" HorizontalAlignment="Stretch">
+            <ComboBox Grid.Row="4" Grid.Column="1" HorizontalAlignment="Stretch" Text="{x:Bind _viewModel.Model, Mode=TwoWay}">
                 <x:String>deepseek-chat</x:String>
                 <x:String>deepseek-reasoner</x:String>
             </ComboBox>
             <TextBlock Grid.Row="5" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Temperature</TextBlock>
-            <Slider Grid.Row="5" Grid.Column="1" Minimum="0" Maximum="2" Value="0.7" StepFrequency="0.1" />
+            <Slider Grid.Row="5" Grid.Column="1" Minimum="0" Maximum="2" StepFrequency="0.1" Value="{x:Bind _viewModel.Temperature, Mode=TwoWay}"/>
             <Grid Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" ColumnSpacing="4" Padding="0,8,0,0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
@@ -98,9 +98,9 @@
                 <x:String>Edge</x:String>
             </ComboBox>
             <TextBlock Grid.Row="8" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Fresh Interval</TextBlock>
-            <NumberBox Grid.Row="8" Grid.Column="1" PlaceholderText="Milliseconds"/>
+            <NumberBox Grid.Row="8" Grid.Column="1" PlaceholderText="Milliseconds" Value="{x:Bind _viewModel.Interval}"/>
             <TextBlock Grid.Row="9" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Headless</TextBlock>
-            <CheckBox Grid.Row="9" Grid.Column="1"/>
+            <CheckBox Grid.Row="9" Grid.Column="1" IsChecked="{x:Bind _viewModel.IsHeadless}"/>
         </Grid>
         <Button Grid.Row="1" Style="{ThemeResource AccentButtonStyle}" HorizontalAlignment="Stretch">启动！</Button>
     </Grid>
