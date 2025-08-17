@@ -102,6 +102,30 @@
             <TextBlock Grid.Row="9" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Headless</TextBlock>
             <CheckBox Grid.Row="9" Grid.Column="1" IsChecked="{x:Bind _viewModel.IsHeadless}"/>
         </Grid>
-        <Button Grid.Row="1" Style="{ThemeResource AccentButtonStyle}" HorizontalAlignment="Stretch">启动！</Button>
+        <Grid 
+            Grid.Row="1" 
+            RowSpacing="12" 
+            ColumnSpacing="8" 
+            Padding="16"             
+            CornerRadius="8"
+            BorderThickness="1"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Fetching</TextBlock>
+            <ProgressBar Grid.Row="0" Grid.Column="1" Value="{x:Bind _viewModel.FetchingProgress}"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center">Processing</TextBlock>
+            <ProgressBar Grid.Row="1" Grid.Column="1" Value="{x:Bind _viewModel.ProcessingProgress}"/>
+        </Grid>
+        <Button Grid.Row="2" Style="{ThemeResource AccentButtonStyle}" HorizontalAlignment="Stretch">启动！</Button>
     </Grid>
 </Window>
