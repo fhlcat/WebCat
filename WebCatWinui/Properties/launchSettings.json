@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "WebCatWinui (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "WebCatWinui (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

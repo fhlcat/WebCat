@@ -13,11 +13,15 @@ type Progress<'a> =
       Current: int
       Total: int }
 
-[<Struct>]
-type MainOptions =
+type FetchOptions =
     { RefreshInterval: int
       Browser: Browser
-      Headless: bool
+      Headless: bool }
+
+[<Struct>]
+type MainOptions =
+    {
+      FetchOptions: FetchOptions
       ProcessOptions: ProcessOptions
       OnFetchStart: Option<Progress<SearchEngineResult> -> unit>
       OnProcessStart: Option<Progress<Webpage> -> unit> }
@@ -53,7 +57,7 @@ let callIfHave (wrapper: Option<'a -> unit>) (arg: 'a) =
     | Some f -> f arg
 
 let runMainAsync (query: string) (options: MainOptions) : Async<MainResult> =
-    let driver = initWebDriver (options.Browser, options.Headless)
+    let driver = initWebDriver (options.FetchOptions.Browser, options.FetchOptions.Headless)
 
     async {
         let! searchResults = fetchBingResultsAsync driver query
@@ -69,7 +73,7 @@ let runMainAsync (query: string) (options: MainOptions) : Async<MainResult> =
 
             async {
                 let! webpage = fetchWebpageAsync driver result.Url
-                do! Async.Sleep options.RefreshInterval
+                do! Async.Sleep options.FetchOptions.RefreshInterval
                 return webpage
             }
 

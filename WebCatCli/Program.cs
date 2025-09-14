@@ -87,6 +87,11 @@ internal static class Program
     private static void MainAction(ParseResult parseResult)
     {
         var query = parseResult.GetValue(QuestionArgument);
+        var fetchOptions = new FetchOptions(
+            parseResult.GetValue(IntervalOption),
+            parseResult.GetValue(BrowserTypeOption),
+            parseResult.GetValue(HeadlessOption)
+        );
         var processOptions = new Process.ProcessOptions(
             parseResult.GetValue(ApiKeyOption)!,
             parseResult.GetValue(TemperatureOption),
@@ -94,9 +99,7 @@ internal static class Program
             parseResult.GetValue(EndpointOption)!
         );
         var options = new MainOptions(
-            parseResult.GetValue(IntervalOption),
-            parseResult.GetValue(BrowserTypeOption),
-            parseResult.GetValue(HeadlessOption),
+            fetchOptions,
             processOptions,
             FSharpOption<FSharpFunc<FetchProgress, Unit>>.Some(
                 FuncConvert.FromAction((FetchProgress progress) => Log.Information("Fetching: {@Progress}", progress))
