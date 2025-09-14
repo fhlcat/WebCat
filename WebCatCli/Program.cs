@@ -2,28 +2,29 @@
 
 using System.Text.Json;
 using Serilog;
-using WebCat;
+using WebCatBase;
 
 namespace WebCatCli;
 
 public static class Program
 {
-    private static void MainAction(CliHelper.CliParameters parameters)
+    private static void OnProcessing(string title, int current, int total) =>
+        Log.Information("Processing ({Current}/{Total}): {Title}", current + 1, total, title);
+
+    private static void OnFetching(string title, int current, int total) =>
+        Log.Information("Fetching ({Current}/{Total}): {Title}", current + 1, total, title);
+
+    private static void MainAction(Cli.CliParameters parameters)
     {
-        var aiClient = new AiClient(
-            parameters.Model,
-            parameters.Endpoint,
-            parameters.ApiKey
-        );
-        var webcat = new WebCat.WebCat(aiClient);
-        webcat.OnFetching += (title, current, total) =>
-            Log.Information("Fetching ({Current}/{Total}): {Title}", current + 1, total, title);
-        webcat.OnProcessing += (title, current, total) =>
-            Log.Information("Processing ({Current}/{Total}): {Title}", current + 1, total, title);
+        var aiOptions = new AiOptions
+        {
+            ApiKey = parameters.ApiKey, Endpoint = parameters.Endpoint, Model = parameters.Model,
+            Temperature = parameters.Temperature
+        };
 
         Log.Information("Starting work");
         var question = parameters.Question;
-        var result = webcat.WorkAsync(question).Result;
+        var result = WebCat.WorkAsync(question, aiOptions, OnFetching, OnProcessing);
         Log.Information("Completed work");
 
         var json = JsonSerializer.Serialize(result);
@@ -38,8 +39,7 @@ public static class Program
             .WriteTo.Console()
             .WriteTo.File("log.txt")
             .CreateLogger();
-        
-        var cliHelper = new CliHelper(MainAction);
-        cliHelper.Invoke(args);
+
+        Cli.Invoke(MainAction, args);
     }
 }

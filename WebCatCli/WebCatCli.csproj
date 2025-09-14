@@ -15,7 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\WebCat\WebCat.csproj"/>
+        <ProjectReference Include="..\WebCatBase\WebCatBase.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,8 +1,10 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebCat", "WebCat\WebCat.csproj", "{9570B31C-A8B0-4637-956B-923BB5143BC3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebCatBase", "WebCatBase\WebCatBase.csproj", "{9570B31C-A8B0-4637-956B-923BB5143BC3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebCatCli", "WebCatCli\WebCatCli.csproj", "{C77993EC-9AB4-4AAA-8146-553399411270}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebCatWebBackend", "WebCatWebBackend\WebCatWebBackend.csproj", "{FC40E372-525B-4E8C-AC20-75B2282F510F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +20,9 @@ Global
 		{C77993EC-9AB4-4AAA-8146-553399411270}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C77993EC-9AB4-4AAA-8146-553399411270}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C77993EC-9AB4-4AAA-8146-553399411270}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC40E372-525B-4E8C-AC20-75B2282F510F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC40E372-525B-4E8C-AC20-75B2282F510F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC40E372-525B-4E8C-AC20-75B2282F510F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC40E372-525B-4E8C-AC20-75B2282F510F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

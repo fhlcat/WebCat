@@ -3,9 +3,18 @@ using System.Text.Json;
 using OpenAI;
 using OpenAI.Chat;
 
-namespace WebCat;
+namespace WebCatBase;
 
-public class AiClient(string model, string endpoint, string apiKey)
+public record struct AiOptions
+{
+    public required string Model { get; init; }
+    public required string Endpoint { get; init; }
+    public required string ApiKey { get; init; }
+    
+    public required float Temperature { get; init; }
+}
+
+public class AiClient
 {
     //todo rewrite prompt to be more concise and clear
     private const string SystemPrompt =
@@ -30,15 +39,6 @@ public class AiClient(string model, string endpoint, string apiKey)
         严格遵守输入和输出格式，确保输出是有效的JSON。
         """;
 
-    private readonly ChatClient _chatClient = new(
-        model,
-        new ApiKeyCredential(apiKey),
-        new OpenAIClientOptions
-        {
-            Endpoint = new Uri(endpoint)
-        }
-    );
-
     private static IEnumerable<string> ParseResponse(string responseText)
     {
         return JsonDocument
@@ -48,17 +48,24 @@ public class AiClient(string model, string endpoint, string apiKey)
             .Select(element => element.GetString()!);
     }
 
-    public async Task<IEnumerable<string>> ParseAsync(string question, string article, float temperature)
+    public static Func<string,string,Task<IEnumerable<string>>> PrepareParseAsync(AiOptions options)
     {
-        var result = await _chatClient.CompleteChatAsync(
-            (ChatMessage[])
-            [
-                new SystemChatMessage(SystemPrompt),
-                new UserChatMessage(JsonSerializer.Serialize(new { article, question }))
-            ],
-            new ChatCompletionOptions
-                { ResponseFormat = ChatResponseFormat.CreateJsonObjectFormat(), Temperature = temperature }
-        );
-        return ParseResponse(result.Value.Content[0].Text!);
+        var chatClient = new ChatClient(
+            options.Model,
+            new ApiKeyCredential(options.ApiKey),
+            new OpenAIClientOptions { Endpoint = new Uri(options.Endpoint) });
+        return async (article, question) =>
+        {
+            var result = await chatClient.CompleteChatAsync(
+                (ChatMessage[])
+                [
+                    new SystemChatMessage(SystemPrompt),
+                    new UserChatMessage(JsonSerializer.Serialize(new { article, question }))
+                ],
+                new ChatCompletionOptions
+                    { ResponseFormat = ChatResponseFormat.CreateJsonObjectFormat(), Temperature = options.Temperature }
+            );
+            return ParseResponse(result.Value.Content[0].Text!);
+        };
     }
 }
