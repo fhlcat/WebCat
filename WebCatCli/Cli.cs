@@ -34,14 +34,13 @@ public static class Cli
             "The temperature for the AI model, controlling randomness in responses, must be between 0.0 and 1.0"
     };
 
-    public record struct CliParameters
-    {
-        public required string Question { get; init; }
-        public required string Endpoint { get; init; }
-        public required string ApiKey { get; init; }
-        public required string Model { get; init; }
-        public required float Temperature { get; init; }
-    }
+    public record struct CliParameters(
+        string Question,
+        string Endpoint,
+        string ApiKey,
+        string Model,
+        float Temperature
+    );
 
     public static int Invoke(Action<CliParameters> action, IReadOnlyList<string> args)
     {

@@ -5,16 +5,9 @@ using OpenAI.Chat;
 
 namespace WebCatBase;
 
-public record struct AiOptions
-{
-    public required string Model { get; init; }
-    public required string Endpoint { get; init; }
-    public required string ApiKey { get; init; }
-    
-    public required float Temperature { get; init; }
-}
+public record struct AiOptions(string Model, string Endpoint, string ApiKey, float Temperature);
 
-public class AiClient
+public static class Ai
 {
     //todo rewrite prompt to be more concise and clear
     private const string SystemPrompt =
@@ -48,12 +41,13 @@ public class AiClient
             .Select(element => element.GetString()!);
     }
 
-    public static Func<string,string,Task<IEnumerable<string>>> PrepareParseAsync(AiOptions options)
+    public static Func<string, string, Task<IEnumerable<string>>> PrepareParseAsync(AiOptions options)
     {
         var chatClient = new ChatClient(
             options.Model,
             new ApiKeyCredential(options.ApiKey),
-            new OpenAIClientOptions { Endpoint = new Uri(options.Endpoint) });
+            new OpenAIClientOptions { Endpoint = new Uri(options.Endpoint) }
+        );
         return async (article, question) =>
         {
             var result = await chatClient.CompleteChatAsync(
