@@ -8,11 +8,15 @@ namespace WebCatCli;
 
 public static class Program
 {
-    private static void OnProcessing(string title, int current, int total) =>
-        Log.Information("Processing ({Current}/{Total}): {Title}", current + 1, total, title);
-
-    private static void OnFetching(string title, int current, int total) =>
-        Log.Information("Fetching ({Current}/{Total}): {Title}", current + 1, total, title);
+    private static readonly WebCat.WorkEvents WorkEvents = new(
+        (count, totalCount, current) =>
+            Log.Information("Fetching Started {Title} - {Current}/{Total}", count, totalCount, current),
+        (count, totalCount, current) => Log.Information("Fetching Completed {Title} - {Current}/{Total}", count,
+            totalCount, current),
+        (count, totalCount, current) => Log.Information("Processing Started {Title} - {Current}/{Total}", count,
+            totalCount, current),
+        (count, totalCount, current) => Log.Information("Processing Completed {Title} - {Current}/{Total}", count,
+            totalCount, current));
 
     private static void MainAction(Cli.CliParameters parameters)
     {
@@ -24,7 +28,7 @@ public static class Program
 
         Log.Information("Starting work");
         var question = parameters.Question;
-        var result = WebCat.WorkAsync(question, aiOptions, OnFetching, OnProcessing);
+        var result = WebCat.WorkAsync(question, aiOptions, WorkEvents);
         Log.Information("Completed work");
 
         var json = JsonSerializer.Serialize(result);
