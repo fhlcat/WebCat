@@ -13,13 +13,9 @@ public static class Program
             .CreateLogger();
 
         var builder = WebApplication.CreateBuilder(args);
+        builder.Services.AddControllers();
         var app = builder.Build();
-        
-        var taskController = new TaskController();
-
-        app.MapPost("/tasks", taskController.CreateTask);
-        app.MapGet("/tasks/{id}/progress", taskController.GetTaskProgress);
-        app.MapGet("/tasks/{id}/result", taskController.GetTaskResult);
+        app.MapControllers();
 
         app.Run();
     }

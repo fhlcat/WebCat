@@ -1,11 +1,13 @@
 ﻿using System.Collections.Concurrent;
 using System.Text.Json;
+using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using WebCatBase;
 
 namespace WebCatWebBackend;
 
-public class TaskController
+[ApiController]
+public class TasksController: ControllerBase
 {
     private readonly ConcurrentDictionary<string, Task> _tasks = new();
 
@@ -13,6 +15,7 @@ public class TaskController
 
     public event Action<int, int, string>? OnProgressUpdate;
 
+    [HttpPost("/tasks")]
     public string CreateTask(TaskCreationRequest request)
     {
         var workEvents = new WebCat.WorkEvents(
@@ -37,10 +40,12 @@ public class TaskController
         IncludeFields = true
     };
 
+    [HttpGet("/tasks/{id}/result")]
     public IResult GetTaskResult(string id) => _tasks.TryGetValue(id, out var task)
         ? Results.Ok(JsonSerializer.Serialize(task, _resultsSerializationOptions))
         : Results.NotFound("Task not completed yet");
 
+    [HttpGet("/tasks{id}/progress")]
     public async Task GetTaskProgress(HttpContext context, string id)
     {
         var success = _tasks.TryGetValue(id, out var task);
